@@ -26,7 +26,7 @@ export async function getNotifications() {
       "Notifications fetched successfully"
     );
 
-    return data;
+    return data.notifications;
   } catch (error) {
     await Log(
       "frontend",
