@@ -1,35 +1,35 @@
 import {
   Card,
   CardContent,
-  Typography,
   Chip,
+  Typography,
 } from "@mui/material";
 
-function getChipColor(type) {
-  switch (type) {
-    case "Placement":
-      return "success";
+export function NotificationCard({ notification }) {
+  const getColor = () => {
+    switch (notification.Type) {
+      case "Placement":
+        return "success";
 
-    case "Result":
-      return "primary";
+      case "Result":
+        return "primary";
 
-    case "Event":
-      return "warning";
+      case "Event":
+        return "warning";
 
-    default:
-      return "default";
-  }
-}
+      default:
+        return "default";
+    }
+  };
 
-export default function NotificationCard({ notification }) {
   return (
-    <Card sx={{ mb: 2, borderRadius: 2 }}>
+    <Card>
       <CardContent>
 
         <Chip
           label={notification.Type}
-          color={getChipColor(notification.Type)}
-          sx={{ mb: 2 }}
+          color={getColor()}
+          sx={{ mb: 1 }}
         />
 
         <Typography variant="h6">
@@ -39,7 +39,6 @@ export default function NotificationCard({ notification }) {
         <Typography
           variant="body2"
           color="text.secondary"
-          sx={{ mt: 1 }}
         >
           {notification.Timestamp}
         </Typography>

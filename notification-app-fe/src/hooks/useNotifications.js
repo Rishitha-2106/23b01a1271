@@ -1,37 +1,44 @@
 import { useState, useEffect } from "react";
 import { getNotifications } from "../api/notifications";
+// If your folder is actually "apis", change "../api/" to "../apis/"
 import { getTopNotifications } from "../utils/priority";
-
+import { authenticate } from "../api/auth";
 export function useNotifications() {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
 
-  const fetchData = async () => {
-    setLoading(true);
-
-    try {
-      const data = await getNotifications();
-
-      const topNotifications = getTopNotifications(data);
-
-      setNotifications(topNotifications);
-      setError("");
-    } catch (err) {
-      setError(err.message || "Failed to fetch notifications");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const ITEMS_PER_PAGE = 10;
 
   useEffect(() => {
-    fetchData();
+    const load = async () => {
+      try {
+        setLoading(true);
+await authenticate();
+
+const data = await getNotifications();
+setNotifications(getTopNotifications(data));      } catch (err) {
+        setError(err.message || "Something went wrong");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    load();
   }, []);
+
+  const total = notifications.length;
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(total / ITEMS_PER_PAGE)
+  );
 
   return {
     notifications,
+    total,
+    totalPages,
     loading,
     error,
-    refreshNotifications: fetchData,
   };
 }

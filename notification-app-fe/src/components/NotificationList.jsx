@@ -1,24 +1,19 @@
-import NotificationCard from "./NotificationCard";
-import { Typography } from "@mui/material";
+import { Stack } from "@mui/material";
+import { NotificationCard } from "./NotificationCard";
 
-export default function NotificationList({ notifications }) {
-
-  if (notifications.length === 0) {
-    return (
-      <Typography align="center">
-        No Notifications Found
-      </Typography>
-    );
+export function NotificationList({ notifications }) {
+  if (!notifications || notifications.length === 0) {
+    return null;
   }
 
   return (
-    <>
+    <Stack spacing={2}>
       {notifications.map((notification) => (
         <NotificationCard
           key={notification.ID}
           notification={notification}
         />
       ))}
-    </>
+    </Stack>
   );
 }
