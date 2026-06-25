@@ -17,6 +17,9 @@ export function useNotifications() {
 await authenticate();
 
 const data = await getNotifications();
+
+console.log("Notifications from API:", data);
+
 setNotifications(getTopNotifications(data));      } catch (err) {
         setError(err.message || "Something went wrong");
       } finally {
