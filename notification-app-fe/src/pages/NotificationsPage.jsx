@@ -19,13 +19,12 @@ export function NotificationsPage() {
   const [filter, setFilter] = useState("All");
   const [page, setPage] = useState(1);
 
-  const {
-    notifications,
-    totalPages,
-    loading,
-    error,
-  } = useNotifications();
-
+const {
+  notifications,
+  loading,
+  error,
+  totalPages,
+} = useNotifications();
   const unreadCount = notifications.length;
 
   const handleFilterChange = (newFilter) => {
